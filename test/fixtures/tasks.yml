@@ -1,5 +1,5 @@
 first:
   name: Clean House
   description: Clean the House
-  difficulty_level : 1
+  difficulty_level: 1
   project_id: 1
