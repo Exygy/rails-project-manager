@@ -40,5 +40,4 @@ class TaskTest < ActiveSupport::TestCase
     task = Task.create params
     assert_respond_to(task, :project)
   end  
-
 end
