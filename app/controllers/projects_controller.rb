@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    unless @project.owners.where(id: current_user.id).first
+    unless @project.owners.where(id: current_user.id).first || @project.viewers.where(id: current_user.id).first
       redirect_to projects_path
     end
   end
