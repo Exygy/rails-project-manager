@@ -5,9 +5,9 @@
   <%= @project.name %>
 </p>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %> |
-<%= link_to 'Add Task', new_project_task_path(@project) %>
+<%= link_to 'Edit', edit_project_path(@project), class: "btn" %> 
+<%= link_to 'Back', projects_path, class: "btn" %> 
+<%= link_to 'Add Task', new_project_task_path(@project), class: "btn btn-primary" %>
 
 <ol>
 <% @project.tasks.each do |task| %>
