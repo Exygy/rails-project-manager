@@ -33,7 +33,8 @@ ActiveRecord::Schema.define(version: 20140814172824) do
   create_table "tasks", force: true do |t|
     t.string   "name"
     t.string   "description"
-    t.integer  "difficulty_level"
+    t.integer  "rdifficulty_level"
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

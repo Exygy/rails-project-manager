@@ -4,6 +4,7 @@ class CreateTasks < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.integer :rdifficulty_level
+      t.belongs_to :project
       t.timestamps
     end
   end
