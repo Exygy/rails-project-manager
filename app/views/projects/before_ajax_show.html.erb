@@ -1,0 +1,9 @@
+<% @project.tasks.each do |task| %>
+  <li>
+    <p><strong><%= task.name %></strong></p>
+    <p>Difficulty: <%= task.difficulty_level %></p>
+    <p><%= task.description %></p>
+    <%= link_to 'Edit', edit_project_task_path(@project, task), class: 'btn' %>
+    <%= link_to 'Destroy', [@project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  </li>
+<% end %>

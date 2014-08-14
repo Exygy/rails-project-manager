@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   def index
+    @project = Project.find(params[:project_id])
+    @tasks = @project.tasks
   end
 
   def show
@@ -43,8 +45,6 @@ class TasksController < ApplicationController
     @task = @project.tasks.find(params[:id])
 
     @task.destroy
-    
-    redirect_to @project
   end
 
   def task_params
