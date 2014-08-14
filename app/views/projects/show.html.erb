@@ -6,4 +6,14 @@
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', projects_path %> |
+<%= link_to 'Add Task', new_project_task_path(@project) %>
+
+<ol>
+<% @project.tasks.each do |task| %>
+  <li>
+    <p><strong><%= task.name %></strong><%= task.difficulty_level %></p>
+    <p><%= task.description %></p>
+  </li>
+<% end %>
+</ol>

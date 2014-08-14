@@ -3,7 +3,7 @@ class CreateTasks < ActiveRecord::Migration
     create_table :tasks do |t|
       t.string :name
       t.string :description
-      t.integer :rdifficulty_level
+      t.integer :difficulty_level
       t.belongs_to :project
       t.timestamps
     end
