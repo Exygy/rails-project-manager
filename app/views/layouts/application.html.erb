@@ -29,7 +29,7 @@
             <ul class="nav user-nav">
               <% if user_signed_in? %>
                 <div class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">User Menu</a>
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i></a>
                   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                     <li>Logged in as <%= current_user.email %></li> <!-- Tried current_user.name, but name is not part of the signup form so it's blank. Used email instead. -->
                     <li><%= link_to "My Account", edit_user_registration_path %></li>
