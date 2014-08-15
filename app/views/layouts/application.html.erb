@@ -28,8 +28,14 @@
 
             <ul class="nav user-nav">
               <% if user_signed_in? %>
-                <li><%= link_to "My Account", edit_user_registration_path %></li>
-                <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-cog"></i></a>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                    <li>Logged in as <%= current_user.email %></li> <!-- Tried current_user.name, but name is not part of the signup form so it's blank. Used email instead. -->
+                    <li><%= link_to "My Account", edit_user_registration_path %></li>
+                    <li><%= link_to "Sign out", destroy_user_session_path, method: :delete %></li>
+                  </ul>
+                </div>
               <% else %>
                 <li><%= link_to "Sign in", user_session_path %></li>
                 <li><%= link_to "Sign up", new_user_registration_path %></li>

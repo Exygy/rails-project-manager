@@ -10,6 +10,9 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    unless valid_reader?
+      redirect_to projects_path
+    end
   end
 
   # GET /projects/new
@@ -19,12 +22,16 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    unless valid_writer?
+      redirect_to projects_path
+    end
   end
 
   # POST /projects
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    @project.owners << current_user
 
     respond_to do |format|
       if @project.save
@@ -54,10 +61,14 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
+    unless valid_writer?
+      redirect_to projects_path and return
+    else
+      @project.destroy
+      respond_to do |format|
+        format.html { redirect_to projects_url }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -65,6 +76,14 @@ class ProjectsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
+    end
+
+    def valid_reader?
+      @project.owners.where(id: current_user.id).first || @project.viewers.where(id: current_user.id).first || current_user.role == User::ROLE[:admin]
+    end
+
+    def valid_writer?
+      @project.owners.where(id: current_user.id).first || current_user.role == User::ROLE[:admin]
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

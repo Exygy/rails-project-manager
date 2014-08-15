@@ -63,6 +63,6 @@ gem 'thin'
 # use thin webserver
 # gem 'thin'
 
-
+gem "font-awesome-rails"
 
 
