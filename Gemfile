@@ -63,6 +63,9 @@ gem 'thin'
 # use thin webserver
 # gem 'thin'
 
-
+group :development do
+  gem 'pry'
+  gem 'pry-nav'
+end
 
 
