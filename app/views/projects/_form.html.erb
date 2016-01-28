@@ -15,6 +15,23 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>
+    <div class="well well-lg">
+        Add the first task to this project
+        <%= f.fields_for :tasks do |task| %>
+            <div class="field">
+              <%= task.label :name %><br>
+              <%= task.text_field :name %>
+            </div>
+            <div class="field">
+              <%= task.label :description %><br>
+              <%= task.text_field :description %>
+            </div>
+            <div class="field">
+              <%= task.label :status %><br>
+              <%= task.select :status, options_for_select(Task.statuses) %>
+            </div>
+        <% end %>
+      </div>
   <div class="actions">
     <%= f.submit %>
   </div>

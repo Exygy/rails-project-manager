@@ -1,0 +1,32 @@
+<h1>Listing of Tasks</h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td>
+          <%= link_to 'Show', task, class: 'btn' %>
+          <%= link_to 'Edit', edit_task_path(project), class: 'btn' %>
+          <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= paginate @tasks %>
+
+
+<%= link_to 'New Task', new_task_path %>
+

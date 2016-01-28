@@ -5,5 +5,49 @@
   <%= @project.name %>
 </p>
 
+
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
+
+
+<div class="well well-lg">
+
+
+    <input type='button' id='load-tasks'>
+  <p>Tasks for this project</p>
+
+
+  <h1>Tasks</h1>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @project.tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+          <td>
+
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+
+
+  <br>
+
+</div>
+
+<script>
+
+
+
+</script>
