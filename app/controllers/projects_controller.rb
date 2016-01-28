@@ -58,10 +58,13 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
+      if @project.destroy
+        format.html { redirect_to projects_url }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to projects_url, notice: 'Cannot delete project until started and finished tasks are removed.' }
+      end
     end
   end
 
