@@ -22,6 +22,11 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    if user_signed_in? && @project.users.where(user_id: current_user) || current_user == User::ROLE[:admin]
+
+    else
+        redirect_to projects_url, notice: 'You do not have permission to edit this project.'
+    end
   end
 
   # POST /projects
