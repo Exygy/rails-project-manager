@@ -22,9 +22,10 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    if user_signed_in? && @project.users.where(user_id: current_user) || current_user == User::ROLE[:admin]
-
+    if can_modify_project?
+      # then allow normal access
     else
+      # otherwise disallow action and redirct to project listing page
         redirect_to projects_url, notice: 'You do not have permission to edit this project.'
     end
   end
@@ -49,31 +50,48 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+    if can_modify_project?
+      respond_to do |format|
+        if @project.update(project_params)
+          format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: 'edit' }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to projects_url, notice: 'You do not have permission to update this project.'
     end
   end
 
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    respond_to do |format|
-      if @project.destroy
-        format.html { redirect_to projects_url }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to projects_url, notice: 'Cannot delete project until started and finished tasks are removed.' }
+    if can_modify_project?
+      respond_to do |format|
+        if @project.destroy
+          format.html { redirect_to projects_url }
+          format.json { head :no_content }
+        else
+          format.html { redirect_to projects_url, notice: 'Cannot delete project until started and finished tasks are removed.' }
+        end
       end
+    else
+      redirect_to projects_url, notice: 'You do not have permission to delete this project.'
     end
   end
 
   private
+    # Can this user modify this project?
+    def can_modify_project?
+      if user_signed_in? && @project.users.where(user_id: current_user) || current_user == User::ROLE[:admin]
+        return true
+      else
+        return false
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
