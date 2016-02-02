@@ -1,21 +1,38 @@
 <%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+    <% if @project.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-      <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @project.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="well well-lg">
+      Add the first task to this project
+      <%= f.fields_for :tasks, @project.tasks do |task| %>
+          <div class="field">
+            <%= task.label :name %><br>
+            <%= task.text_field :name %>
+          </div>
+          <div class="field">
+            <%= task.label :description %><br>
+            <%= task.text_field :description %>
+          </div>
+          <div class="field">
+            <%= task.label :status %><br>
+            <%= task.collection_select :status, Task.statuses.keys, :to_s, :titlecase%>
+          </div>
+      <% end %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>
