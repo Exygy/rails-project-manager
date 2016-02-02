@@ -15,10 +15,12 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = Project.new
+    @project.tasks.build
   end
 
   # GET /projects/1/edit
   def edit
+    @project.tasks.build if @project.tasks.count == 0 #if all tasks have been deleted, add a blank one when editing
   end
 
   # POST /projects
